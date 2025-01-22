@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enter Score</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+
+        header {
+            background-color: #333;
+            padding: 10px 0;
+            color: white;
+            text-align: center;
+        }
+
+        nav {
+            background-color: #444;
+            padding: 10px;
+            text-align: center;
+        }
+
+        nav a {
+            color: white;
+            margin: 0 15px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            width: 40%;
+            margin: 50px auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+
+        .message {
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .success-message {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .error-message {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 6px;
+            color: #555;
+        }
+
+        select, input {
+            padding: 8px;
+            margin-bottom: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 13px;
+        }
+
+        button {
+            background-color: #333;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #555;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1>Kepler Sports Management System</h1>
+</header>
+
+<nav>
+    <a href="#">Home</a>
+    <a href="#">Register Team</a>
+    <a href="#">View Teams</a>
+</nav>
+
+<div class="container">
+    <h2>Enter Score for Match</h2>
+
+    <!-- Display success or error message -->
+    <div th:if="${message}" th:classappend="${success ? 'success-message' : 'error-message'}" th:text="${message}"></div>
+
+    <form action="/createScore" method="post">
+        <label for="match">Select Match:</label>
+        <select name="matchId" id="match" required>
+            <option value="" disabled selected>Select a match</option>
+            <!-- Loop through the available matches -->
+            <th:block th:each="match : ${matches}">
+                <option th:value="${match.id}" th:text="${match.team1.name} + ' vs ' + ${match.team2.name}"></option>
+            </th:block>
+        </select>
+
+        <h3>Enter Scores</h3>
+
+        <!-- Scores for Team 1 -->
+        <label for="team1Score">Score for Team 1:</label>
+        <input type="number" name="team1Score" id="team1Score" required />
+
+        <!-- Scores for Team 2 -->
+        <label for="team2Score">Score for Team 2:</label>
+        <input type="number" name="team2Score" id="team2Score" required />
+
+        <button type="submit">Submit Scores</button>
+    </form>
+</div>
+
+<footer>
+    <p>&copy; 2025 Kepler Sports Management System. All rights reserved.</p>
+</footer>
+</body>
+</html>

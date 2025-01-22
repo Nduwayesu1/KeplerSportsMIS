@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Match</title>
+  <style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f9;
+    }
+    header {
+        background-color: #333;
+        padding: 10px 0;
+        color: white;
+        text-align: center;
+    }
+    nav {
+        background-color: #444;
+        padding: 10px;
+        text-align: center;
+    }
+    nav a {
+        color: white;
+        margin: 0 15px;
+        text-decoration: none;
+        font-weight: bold;
+    }
+    nav a:hover {
+        text-decoration: underline;
+    }
+    .container {
+        width: 40%;
+        margin: 50px auto;
+        background-color: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    h2 {
+        text-align: center;
+        color: #333;
+        font-size: 20px;
+        margin-bottom: 15px;
+    }
+    form {
+        display: flex;
+        flex-direction: column;
+    }
+    label {
+        font-weight: bold;
+        margin-bottom: 6px;
+        color: #555;
+    }
+    input, select {
+        padding: 8px;
+        margin-bottom: 12px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 13px;
+    }
+    button {
+        background-color: #333;
+        color: white;
+        padding: 10px;
+        border: none;
+        border-radius: 4px;
+        font-size: 14px;
+        cursor: pointer;
+    }
+    button:hover {
+        background-color: #555;
+    }
+    footer {
+        background-color: #333;
+        color: white;
+        text-align: center;
+        padding: 10px 0;
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+    }
+    .success-message, .error-message {
+        color: green;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 15px;
+    }
+    .error-message {
+        color: red;
+    }
+  </style>
+</head>
+<body>
+<header>
+  <h1>Kepler Sports Management System</h1>
+</header>
+
+<nav>
+  <a href="#">Home</a>
+  <a href="/createMatch">Create Match</a>
+  <a href="#">View Matches</a>
+</nav>
+
+<div class="container">
+  <h2>Create a New Match</h2>
+
+  <!-- Success message dynamically injected from the controller -->
+  <div th:if="${successMessage}" class="success-message">
+    <p th:text="${successMessage}"></p>
+  </div>
+
+  <!-- Error message dynamically injected from the controller -->
+  <div th:if="${errorMessage}" class="error-message">
+    <p th:text="${errorMessage}"></p>
+  </div>
+
+  <form th:action="@{/createMatch}" th:object="${match}" method="post">
+    <!-- Team 1 -->
+    <label for="team1">Team 1:</label>
+    <select id="team1" name="team1.id" required>
+      <option th:each="team : ${teams}" th:value="${team.id}" th:text="${team.name}"></option>
+    </select>
+
+    <!-- Team 2 -->
+    <label for="team2">Team 2:</label>
+    <select id="team2" name="team2.id" required>
+      <option th:each="team : ${teams}" th:value="${team.id}" th:text="${team.name}"></option>
+    </select>
+
+    <!-- Match Date -->
+    <label for="matchDate">Match Date:</label>
+    <input type="datetime-local" id="matchDate" th:field="*{matchDate}" required>
+
+    <!-- Location -->
+    <label for="location">Location:</label>
+    <input type="text" id="location" th:field="*{location}" placeholder="Enter Location" required>
+
+    <button type="submit">Create Match</button>
+  </form>
+</div>
+
+<footer>
+  <p>&copy; 2025 Kepler Sports Management System. All rights reserved.</p>
+</footer>
+</body>
+</html>
