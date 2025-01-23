@@ -5,6 +5,7 @@ FROM openjdk:23-jdk
 WORKDIR /app
 
 # Copy the Spring Boot JAR file into the container
+# Ensure you run `mvn clean package` first to generate the target folder and JAR file
 COPY target/KeplerSportsMIS-0.0.1-SNAPSHOT.jar app.jar
 
 # Expose the application port
