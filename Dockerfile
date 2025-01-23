@@ -5,10 +5,10 @@ FROM openjdk:23-jdk
 WORKDIR /app
 
 # Copy the Spring Boot JAR file into the container
-COPY target/KeplerSportsMIS-0.0.1-SNAPSHOT.jar KeplerSportsMIS.jar
+COPY target/KeplerSportsMIS-0.0.1-SNAPSHOT.jar app.jar
 
 # Expose the application port
 EXPOSE 8005
 
 # Run the application
-ENTRYPOINT ["java", "-jar", "KeplerSportsMIS.jar"]
+ENTRYPOINT ["java", "-jar", "app.jar"]
